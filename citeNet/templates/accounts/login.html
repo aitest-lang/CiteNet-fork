@@ -5,16 +5,32 @@
 
 {% block content %}
 
+<div class="max-w-sm mx-auto">
+  <div class ="text-4xl">Login</div>
+  {% if messages %}
+  {% for message in messages %}
+    {% if message.tags == "success" %}
+      <div class="max-w-md mx-auto my-4 p-4 bg-green-500 border-l-4 border-green-700 text-white rounded-lg shadow-md transform transition duration-300 hover:scale-105 animate-slide-in" role="alert">
+        <p class="font-semibold text-lg">{{ message }}</p>
+      </div>
+    {% else %}
+      <div class="max-w-md mx-auto my-4 p-4 bg-red-500 border-l-4 border-red-700 text-white rounded-lg shadow-md transform transition duration-300 hover:scale-105 animate-slide-in" role="alert">
+        <p class="font-semibold text-lg">{{ message }}</p>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
 
 
-<form class="max-w-sm mx-auto">
+<form class="mt-5" method="post">
+  {% csrf_token %}
   <div class="mb-5">
-    <label for="email" class="block mb-2 text-sm font-medium text-black">Your email</label>
-    <input type="email" id="email" class="bg-white border-black border text-black rounded-lg block w-full p-2.5" placeholder="name@flowbite.com" required />
+    <label for="username" class="block mb-2 text-sm font-medium text-black">Username</label>
+    <input type="text" name="username" class="bg-white border-black border text-black rounded-lg block w-full p-2.5" placeholder="Username" required />
   </div>
   <div class="mb-5">
     <label for="password" class="block mb-2 text-sm font-medium text-black">Your password</label>
-    <input type="password" id="password" class="bg-white border-black border text-black rounded-lg block w-full p-2.5" required />
+    <input type="password" name="password" class="bg-white border-black border text-black rounded-lg block w-full p-2.5" required />
   </div>
   <div class="flex items-start mb-5">
     <div class="flex items-center h-5">
