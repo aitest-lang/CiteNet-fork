@@ -128,5 +128,5 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # This points to the project-level "static" folder
 ]
 
-LOGIN_REDIRECT_URL = 'home'     # Change 'home' to the URL name of your landing page
+LOGIN_REDIRECT_URL = 'save-search'     # Change 'home' to the URL name of your landing page
 LOGOUT_REDIRECT_URL = 'login'

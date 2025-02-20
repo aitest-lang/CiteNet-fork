@@ -28,7 +28,7 @@ def register(request):
             # messages.success(request, "User created successfully")
             # Optionally, log the user in immediately:
             login(request, user)
-            return redirect("home")  # Redirect to a home page (change URL name as needed)
+            return redirect("search")  # Redirect to a home page (change URL name as needed)
         except Exception as e:
             messages.error(request, f"Error creating user: {e}")
             return render(request, "accounts/register.html")
@@ -44,14 +44,10 @@ def custom_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("home")  # Redirect after successful login
+            return redirect("search")  # Redirect after successful login
         else:
             messages.error(request, "Invalid username or password")
             return render(request, "accounts/login.html")
     else:
         return render(request, "accounts/login.html")
 
-def logout(request):
-    # Logout the user and redirect to login page
-    logout(request)
-    return redirect("login")
