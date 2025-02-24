@@ -7,7 +7,12 @@ from django.contrib.auth.decorators import login_required
 
 @login_required() #redirect when user is not logged in
 def search(request):
-    return render(request,"core/search_suggestions.html")
+    user = request.user
+    context = {
+        'username': user.username,
+        'email': user.email,
+    }
+    return render(request,"core/search_suggestions.html",context)
 
 @csrf_exempt
 def save_search(request):

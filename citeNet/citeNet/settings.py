@@ -128,5 +128,15 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # This points to the project-level "static" folder
 ]
 
-LOGIN_REDIRECT_URL = 'save-search'     # Change 'home' to the URL name of your landing page
+LOGIN_REDIRECT_URL = 'search'     # Change 'home' to the URL name of your landing page
 LOGOUT_REDIRECT_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Default email address to use for outgoing mail
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
+# Custom email subject and body for password reset
+PASSWORD_RESET_TIMEOUT = 3600  # Token validity period (in seconds)
+EMAIL_SUBJECT_PREFIX = '[My Django App] '
+DEFAULT_FROM_EMAIL = 'noreply@mydjangoapp.com'
