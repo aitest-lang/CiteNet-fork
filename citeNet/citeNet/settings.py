@@ -131,12 +131,24 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = 'search'     # Change 'home' to the URL name of your landing page
 LOGOUT_REDIRECT_URL = 'login'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Default email address to use for outgoing mail
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+# # Default email address to use for outgoing mail
+# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
-# Custom email subject and body for password reset
-PASSWORD_RESET_TIMEOUT = 3600  # Token validity period (in seconds)
-EMAIL_SUBJECT_PREFIX = '[My Django App] '
-DEFAULT_FROM_EMAIL = 'noreply@mydjangoapp.com'
+# # Custom email subject and body for password reset
+# PASSWORD_RESET_TIMEOUT = 3600  # Token validity period (in seconds)
+# EMAIL_SUBJECT_PREFIX = '[My Django App] '
+# DEFAULT_FROM_EMAIL = 'noreply@mydjangoapp.com'
+
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.smtp2go.com'
+EMAIL_PORT = 2525  # Alternatively, you can use ports 587, 8025, 25, or 80
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

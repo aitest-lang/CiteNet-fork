@@ -3,6 +3,21 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.views import PasswordResetView
+from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from .forms import CustomPasswordResetForm # Import CustomPasswordResetForm
+
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'registration/password_reset_email.html'
+    success_url = reverse_lazy('password_reset_done')
+    form_class = CustomPasswordResetForm # Use our custom form
+
+    def send_mail(self, subject, message, from_email, recipient_list, **kwargs):
+        kwargs['html_message'] = kwargs.pop('html_message', message)
+        super().send_mail(subject, message, from_email, recipient_list, **kwargs)
+
 
 def register(request):
     if request.method == "POST":
@@ -50,4 +65,3 @@ def custom_login(request):
             return render(request, "accounts/login.html")
     else:
         return render(request, "accounts/login.html")
-

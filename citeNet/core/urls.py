@@ -10,5 +10,6 @@ urlpatterns = [
     path("history",views.history,name="history"),
     path('history/specific_tree/<int:pk>/', views.history_detail, name='history_detail'),
     path('history/<int:pk>/', views.specific_tree, name='specific_tree'),
+    path('history/<int:id>/delete/', views.delete_history, name='delete_history'),
     
 ]

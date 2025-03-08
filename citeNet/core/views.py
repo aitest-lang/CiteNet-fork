@@ -1,10 +1,10 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth.decorators import login_required
 from .models import History
-
+from django.db.models import Q
 
 @login_required() #redirect when user is not logged in
 def search(request):
@@ -63,9 +63,7 @@ def save_history(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+
 
 @login_required
 def history(request):
@@ -82,7 +80,7 @@ def history(request):
             # Since `history` is already a JSONField, no need to use `json.loads`
             decoded_history = entry.history['nodes'][0]['title']
             # print(decoded_history['nodes'][0]['title']) # This is already a Python dictionary
-            print(decoded_history)
+
             history_data.append({
                 'id': entry.id,
                 'history': decoded_history,
@@ -113,3 +111,18 @@ def history_detail(request, pk):
 @login_required
 def specific_tree(request, pk):    
     return render(request, "core/history_tree.html", {'pk': pk})
+
+@login_required  # Ensures only authenticated users can access this view
+def delete_history(request, id):
+    if request.method == "POST":
+        history_entry = get_object_or_404(
+        History.objects.filter(user=request.user),
+        pk=id)
+        
+        # Check if the session user (request.user) is the owner of the entry
+        if history_entry.user != request.user:
+            return HttpResponseForbidden("You don't own this history entry.")
+        
+        history_entry.delete()
+    
+    return redirect("history")
