@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-t+k0nu-6^9-+c(^p$)l$wzw)%+&p#80qsf@cto6s%l^a+ub=5f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["citenet-fork.onrender.com"]
 
 
 # Application definition
